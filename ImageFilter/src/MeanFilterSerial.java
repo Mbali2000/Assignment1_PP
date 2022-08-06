@@ -3,6 +3,8 @@ import java.io.File;
 import java.awt.image.BufferedImage;
 import javax.imageio.*;
 import javax.swing.JPanel;
+import javax.swing.plaf.ColorUIResource;
+
 import javafx.scene.paint.Color;
 
 public class MeanFilterSerial extends JPanel{
@@ -44,17 +46,23 @@ public class MeanFilterSerial extends JPanel{
         int width = img.getWidth();
         int height = img.getHeight();
 
+        //get pixel value
+        int p = img.getRGB(0, 0);
+
         //image smoothing
         getPixels(); //loads image pixels
         for(int row = 1; row< img.getHeight()- 1; row++){
             for(int col = 1; col< img.getWidth() - 1; col++){
+                int sumR=0;int sumG=0;int sumB=0;
                 
                 //window of 3 by 3 row and column
-                int meanRed = meanRed + rgb[0][row-1][col+1];
-                int meanGreen = meanGreen + rgb[1][row][col];
-                int meanBlue = meanBlue + rgb[2][row][col];
+                sumR = sumR + rgb[0][row][col];
+                sumG = sumG + rgb[1][row][col];
+                sumB = sumB + rgb[2][row][col];
 
-                img.setRGB(col, row, rgb);;
+                ColorUIResource c = new ColorUIResource(sumR, sumG, sumB);
+
+                img.setRGB(col, row, c.getRGB());
             }
         }
 
