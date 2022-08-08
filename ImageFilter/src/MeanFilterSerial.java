@@ -53,32 +53,41 @@ public class MeanFilterSerial{
             int height = img.getHeight();
 
 
-            int npix = 0;
-            int red = 0;
-            int gre = 0;
-            int blu = 0;
+            
+            
 
              sTime = System.currentTimeMillis(); // time stamp at start of algorithm execution run 
             //image smoothing
             for(int row = 1; row< height- 1; row++){
                 for(int col = 1; col< width - 1; col++){
-                     
-                    for(int x=0; x<=win; x++){
-                        for(int y=0; y<=win; y++){
+                     //int curRow = row;
+                     //int curCol = col;
+                     int red = 0;
+                     int gre = 0;
+                     int blu = 0;
+                     int aph = 0;
+                    for(int x=0; x<win; x++){
+                        for(int y=0; y<win; y++){
                             //get image pixel at specific coordinate
                             int p = img.getRGB(x,y);
                             //window of 3 by 3 row and column
                             red = red + (p>>16) & 0xff;
                             gre = gre + (p>>8) & 0xff;
                             blu = blu + (p) & 0xff;
+                            aph = aph + (p>>24) & 0xff;
+                            //curCol++;
                         }
+                        //curRow++;
+                        //curCol = col;
                     }
+                    //curRow = row;
                     //new pixel
-                    npix = (red/(win*win)<<16)|(gre/(win*win)<<8)|(blu/(win*win));
+                    int npix = (0xff000000)|(red/(win*win)<<16)|(gre/(win*win)<<8)|(blu/(win*win))|(aph/(win*win)<<24);
                     //System.out.println(npix + " =====");
                     //sets new pixel value with average
                     newPic.setRGB(col, row, npix);  // row and column need to be the width and height if the window size
                 }
+                
             }
             eTime = System.currentTimeMillis(); //time stamp at end of algorithm execution
         }
