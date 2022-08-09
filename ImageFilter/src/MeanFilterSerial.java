@@ -12,6 +12,7 @@ public class MeanFilterSerial{
     //time stamps
     static long sTime;
     static long eTime;
+    static String output;
 
     public MeanFilterSerial(){
         img = null;
@@ -19,27 +20,26 @@ public class MeanFilterSerial{
     }
 
 
-    //get image pixels
-    /*public static void getPixels(){
-        for(int row = 0; row<img.getHeight(); row++){
-            for(int col =0; col<img.getHeight(); col++){
-               
-            }
-        }
-
-    }*/
-
     public static void main(String[]args) throws IOException{
         try (
         // set window size manipulation
         Scanner sc = new Scanner(System.in)) {
+            //input file
+            System.out.println("Enter inout file name: ");
+            String input = sc.nextLine();
+
+            //output file name
+            System.out.println("Enter output file name: ");
+            output = sc.nextLine();
+
+            //window size
             System.out.println("Enter Window Size: ");
 
             int win = sc.nextInt();// size of window
 
             //read in image
             try {
-                f = new File("C:\\Users\\Thabani\\Desktop\\Assignment1_PP\\Assignment1_PP\\ImageFilter\\import_img\\Face.jpeg");
+                f = new File(input);
                 img = ImageIO.read(f);// assigning file to image variable
                 newPic = ImageIO.read(f);
             } catch (Exception e) {
@@ -95,7 +95,7 @@ public class MeanFilterSerial{
         
         //write image
         try {
-            f = new File("C:\\Users\\Thabani\\Desktop\\Assignment1_PP\\Assignment1_PP\\ImageFilter\\export_img\\output.jpg");
+            f = new File(output);
             ImageIO.write(newPic,"jpg", f);
             //System.out.println("=====");
         } catch (Exception e) {
