@@ -21,6 +21,11 @@ public class MeanFilterParrallel extends RecursiveAction{
     static int height;
     static int p;
     static int avg = win*win;
+    private int [] pSource;  //source image pixels
+    private int [] pDestination; //finl image pixels
+    private int pStart;
+    private int pLength;
+
 
     //arguments
     int lo;
@@ -33,34 +38,43 @@ public class MeanFilterParrallel extends RecursiveAction{
 
     }
 
+    //mean calculation method
+    public void meanCompute(BufferedImage img){
+        int sideP = (width - 1)/2;
+        for(int x = 0; x < height; x++){
+            
+            float red = 0, gre = 0, blu = 0, aph = 0;
+            for( int y = -sideP; y <= sideP; y++){
+                // index value goes here
+
+                //get pixel at specific position
+                p = img.getRGB(x, y);
+
+                int curPix = pSource[x];
+
+                //get rgb values at specific pixel
+                red = + (p>>16) & 0xff;
+                gre = + (p>>8) & 0xff;
+                blu = + (p>>0) & 0xff;
+                aph = + (p>>24) & 0xff;
+
+            }
+             int newPix = (0xff000000  )|(((int)red) >> 16) | (((int)gre) >> 8) | (((int)blu) >> 0) | (((int)aph) >> 24);
+             pDestination[x] = newPix;
+        }
+
+
+
+    }
+
+    //crating pool of threads
     static final ForkJoinPool fjPool = new ForkJoinPool();
 
     //instantiates mean filtering algorithm
     @Override
     protected void compute() {
         if((hi - lo) < seqCut){
-            //mean algorithm from sequential code
-            int red = 0;
-            int gre = 0;
-            int blu = 0;
-            int aph = 0;
-
-            for(int x = 0; x < win; x++){
-                for (int y = 0; y < win; y++){
-
-                    //get pixel at specific position
-                    p = img.getRGB(x, y);
-
-                    //get rgb values at specific pixel
-                    red = red + (p>>16) & 0xff;
-                    gre = gre + (p>>8) & 0xff;
-                    blu = blu + (p>>0) & 0xff;
-                    aph = aph + (p>>24) & 0xff;
-
-
-
-                }
-                //set new pixel value
+            
              
             }
         }else{
