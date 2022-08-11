@@ -1,17 +1,23 @@
 import java.util.concurrent.RecursiveTask;
+import javax.imageio.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.RecursiveAction;
+
 
 public class MedianFilterParrallel extends RecursiveTask {
 
     static BufferedImage img;
     static File f;
+    static BufferedImage newPic = null;
 
-    public int[ ]getPixels(BufferedImage img){
-        for(int x = window/2 ; x < width-window/2; x++){
-            for(int y = window; y < length-window/2; y++){
-
-            }
-        }
+    public MedianFilterParrallel(){
+        img = null;
     }
+
+
+   
 
     public static void main(String[] args) {
         

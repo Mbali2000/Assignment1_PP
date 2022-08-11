@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveAction;
-
 import javax.imageio.ImageIO;
 
 
@@ -14,18 +13,6 @@ public class MeanFilterParrallel extends RecursiveAction{
     static BufferedImage img;
     static File f;
     static BufferedImage newPic;
-    static String input;
-    static String output;
-    static int win;
-    static int width;
-    static int height;
-    static int p;
-    static int avg = win*win;
-    private int [] pSource;  //source image pixels
-    private int [] pDestination; //finl image pixels
-    private int pStart;
-    private int pLength;
-
 
     //arguments
     int lo;
@@ -114,17 +101,6 @@ public class MeanFilterParrallel extends RecursiveAction{
             System.out.println(e);
         } 
 
-        //image size 
-        width = img.getWidth();
-        height = img.getHeight();
-        
-        //executing parallel algorithm
-        static int MeanFilterParrallel(int [] array){
-            MeanFilterParrallel t = new MeanFilterParrallel(l, h, a);
-            ForkJoinPool.commonPool().invoke(t);
-
-            return t.ans;
-        }
 
         //image export
         try {
