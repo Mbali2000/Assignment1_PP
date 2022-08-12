@@ -13,41 +13,70 @@ public class MeanFilterParrallel extends RecursiveAction{
     static BufferedImage img;
     static File f;
     static BufferedImage newPic;
+    static int surPix;
+    static int win;
+    static int sq;
+    
+    
 
     //arguments
-    int lo;
+    int sHeight;
+    int eHeight;
+    int sWidth;
+    int eWidth;
     int hi;
-    int [] arr;
-    static final int seqCut = win;
+    
+    static int seqCut = 100;
 
-    public MeanFilterParrallel(int l, int h, int [] a){
-        lo = l; hi = h; arr = a;
+    public MeanFilterParrallel(int sH, int eH, int sW, int eW){
+
+        sHeight = sH;
+        eHeight = eH;
+        sWidth = sW;
+        eWidth = eW; 
 
     }
 
     //mean calculation method
-    public void meanCompute(BufferedImage img){
-        int sideP = (width - 1)/2;
-        for(int x = 0; x < height; x++){
-            
-            float red = 0, gre = 0, blu = 0, aph = 0;
-            for( int y = -sideP; y <= sideP; y++){
-                // index value goes here
+    public void meanCompute(){
+        //nt sideP = (img.getWidth() - 1)/2;
+        for(int row = surPix; row < img.getHeight() - surPix; row++){
+            for( int col = surPix; col < eWidth; col++){
 
-                //get pixel at specific position
-                p = img.getRGB(x, y);
+                int  red = 0, gre = 0, blu = 0, aph = 0;
 
-                int curPix = pSource[x];
+                for(int x = row; x <= surPix; x++){
+                    for(int y = col; y <= surPix; y++){
 
-                //get rgb values at specific pixel
-                red = + (p>>16) & 0xff;
-                gre = + (p>>8) & 0xff;
-                blu = + (p>>0) & 0xff;
-                aph = + (p>>24) & 0xff;
+                        //get pixel at specific position
+                        int p = img.getRGB(x, y);
+
+                
+
+                        //get rgb values at specific pixel
+                        red += (p>>16) & 0xff;
+                        gre += (p>>8) & 0xff;
+                        blu += (p) & 0xff;
+                        aph += (p>>24) & 0xff;
+
+                    }
+                }
+                int sq = win*win;
+                int r = red/sq;
+                int g = gre/sq;
+                int b = blu/sq;
+                int a = aph/sq;
+                
+                int newPix = (0xff000000)|((r) >> 16) | ((g) >> 8) | ((b) >> 0) | ((a) >> 24);
+    
+                newPic.setRGB(col, row, newPix);  
+
+
+
 
             }
-             int newPix = (0xff000000  )|(((int)red) >> 16) | (((int)gre) >> 8) | (((int)blu) >> 0) | (((int)aph) >> 24);
-             pDestination[x] = newPix;
+            
+             
         }
 
 
@@ -55,45 +84,44 @@ public class MeanFilterParrallel extends RecursiveAction{
     }
 
     //crating pool of threads
-    static final ForkJoinPool fjPool = new ForkJoinPool();
+    //static final ForkJoinPool fjPool = new ForkJoinPool();
 
     //instantiates mean filtering algorithm
     @Override
     protected void compute() {
-        if((hi - lo) < seqCut){
+        if((eWidth - sWidth) < seqCut){
             
-             
+            meanCompute();
+            return;  
             }
-        }else{
+        {
             
-            MeanFilterParrallel left = new MeanFilterParrallel(lo, (hi+lo)/2, arr);
-            MeanFilterParrallel right = new MeanFilterParrallel((hi+lo)/2, hi, arr);
-            left.fork();
-
-                MeanFilterParrallel rAns = right.compute(); 
-                MeanFilterParrallel lAns = left.join();
-
-                return lAns + rAns ;
+            MeanFilterParrallel left = new MeanFilterParrallel(sHeight, eHeight, sWidth, (sWidth+eWidth)/2 );
+            MeanFilterParrallel right = new MeanFilterParrallel(sHeight, eHeight, (sWidth+eWidth)/2, eWidth);
+            invokeAll(left, right);
+            
         }
         
     }
 
     public static void main(String[] args) throws IOException {
-        //input prompts
-        Scanner sc = new Scanner(System.in);
+        try (//input prompts
+        Scanner sc = new Scanner(System.in)) {
+            System.out.println("Enter window size: ");
+            win = sc.nextInt();
+        }
 
-        System.out.println("Enter input file name: ");
-        input = sc.nextLine();
+        /*System.out.println("Enter input file name: ");
+        String input = sc.nextLine();
 
         System.out.println("Enter output file name: ");
-        output = sc.nextLine();
+        String output = sc.nextLine();*/
 
-        System.out.println("Enter window size: ");
-        win = sc.nextInt();
+        surPix = (win-1)/2;
 
         //image read in
         try {
-            f = new File("C:\\Users\\Thabani\\Desktop\\Assignment1_PP\\Assignment1_PP\\ImageFilter\\import_img"+input);
+            f = new File("C:\\Users\\Thabani\\Desktop\\Assignment1_PP\\Assignment1_PP\\ImageFilter\\import_img\\image2.jpg");
             img = ImageIO.read(f);// assigning file to image variable
             newPic = ImageIO.read(f);
         } catch (Exception e) {
@@ -101,10 +129,14 @@ public class MeanFilterParrallel extends RecursiveAction{
             System.out.println(e);
         } 
 
+        ForkJoinPool fj = new ForkJoinPool();
+        MeanFilterParrallel mp = new MeanFilterParrallel(win, img.getHeight() - win, win, img.getWidth());
+        fj.invoke(mp);
+
 
         //image export
         try {
-            f = new File("C:\\Users\\Thabani\\Desktop\\Assignment1_PP\\Assignment1_PP\\ImageFilter\\export_img"+ output);
+            f = new File("C:\\Users\\Thabani\\Desktop\\Assignment1_PP\\Assignment1_PP\\ImageFilter\\export_img\\output.jpg");
             ImageIO.write(newPic,"jpg", f);
             //System.out.println("=====");
         } catch (Exception e) {
