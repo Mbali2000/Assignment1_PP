@@ -7,7 +7,7 @@ import java.util.concurrent.RecursiveAction;
 import javax.imageio.ImageIO;
 
 
-public class MeanFilterParrallel extends RecursiveAction{
+public class MeanFilterParallel extends RecursiveAction{
 
     //golobal variables
     static BufferedImage img;
@@ -26,9 +26,15 @@ public class MeanFilterParrallel extends RecursiveAction{
     int eWidth;
     int hi;
     
-    static int seqCut = 100;
+    //time stamps
+    static long sTime;
+    static long eTime;
+    static String output;
 
-    public MeanFilterParrallel(int sH, int eH, int sW, int eW){
+    //sequential cutoff
+    static int seqCut = 1000;
+
+    public MeanFilterParallel(int sH, int eH, int sW, int eW){
 
         sHeight = sH;
         eHeight = eH;
@@ -41,15 +47,15 @@ public class MeanFilterParrallel extends RecursiveAction{
     public void meanCompute(){
         //nt sideP = (img.getWidth() - 1)/2;
         for(int row = surPix; row < img.getHeight() - surPix; row++){
-            for( int col = surPix; col < eWidth; col++){
+            for( int col = surPix; col < img.getWidth() - surPix; col++){
 
                 int  red = 0, gre = 0, blu = 0, aph = 0;
 
-                for(int x = row; x <= surPix; x++){
-                    for(int y = col; y <= surPix; y++){
+                for(int x = row - surPix; x <= row +surPix; x++){
+                    for(int y = col - surPix; y <= col+surPix; y++){
 
                         //get pixel at specific position
-                        int p = img.getRGB(x, y);
+                        int p = img.getRGB(y, x);
 
                 
 
@@ -61,13 +67,14 @@ public class MeanFilterParrallel extends RecursiveAction{
 
                     }
                 }
-                int sq = win*win;
+                sq = win*win;
                 int r = red/sq;
                 int g = gre/sq;
                 int b = blu/sq;
                 int a = aph/sq;
-                
-                int newPix = (0xff000000)|((r) >> 16) | ((g) >> 8) | ((b) >> 0) | ((a) >> 24);
+                //System.out.println("twofortw0");
+                int newPix = (a<< 24) |(r<< 16) | (g<< 8) | (b) ;
+      
     
                 newPic.setRGB(col, row, newPix);  
 
@@ -94,10 +101,11 @@ public class MeanFilterParrallel extends RecursiveAction{
             meanCompute();
             return;  
             }
-        {
-            
-            MeanFilterParrallel left = new MeanFilterParrallel(sHeight, eHeight, sWidth, (sWidth+eWidth)/2 );
-            MeanFilterParrallel right = new MeanFilterParrallel(sHeight, eHeight, (sWidth+eWidth)/2, eWidth);
+        else{   
+
+           
+            MeanFilterParallel left = new MeanFilterParallel(sHeight, eHeight, sWidth, (sWidth+eWidth)/2 );
+            MeanFilterParallel right = new MeanFilterParallel(sHeight, eHeight, (sWidth+eWidth)/2, eWidth);
             invokeAll(left, right);
             
         }
@@ -107,43 +115,59 @@ public class MeanFilterParrallel extends RecursiveAction{
     public static void main(String[] args) throws IOException {
         try (//input prompts
         Scanner sc = new Scanner(System.in)) {
-            System.out.println("Enter window size: ");
-            win = sc.nextInt();
-        }
 
-        /*System.out.println("Enter input file name: ");
-        String input = sc.nextLine();
+        //System.out.println("Enter input file name: ");
+        String input = args[0];
 
-        System.out.println("Enter output file name: ");
-        String output = sc.nextLine();*/
+        //System.out.println("Enter output file name: ");
+        String output = args[1];
+
+        //System.out.println("Enter window size: ");
+        String num = args[2];
+        win = Integer.parseInt(num);
+        
+
+        
 
         surPix = (win-1)/2;
 
         //image read in
         try {
-            f = new File("C:\\Users\\Thabani\\Desktop\\Assignment1_PP\\Assignment1_PP\\ImageFilter\\import_img\\image2.jpg");
+            f = new File("../import_img/"+ input);
             img = ImageIO.read(f);// assigning file to image variable
             newPic = ImageIO.read(f);
         } catch (Exception e) {
             //handle exception
             System.out.println(e);
         } 
+    
+
+        // time stamp at start of algorithm execution run
+        sTime = System.currentTimeMillis(); 
 
         ForkJoinPool fj = new ForkJoinPool();
-        MeanFilterParrallel mp = new MeanFilterParrallel(win, img.getHeight() - win, win, img.getWidth());
+        MeanFilterParallel mp = new MeanFilterParallel(0, img.getHeight(), 0, img.getWidth());
         fj.invoke(mp);
+
+        //time stamp at end of algorithm execution taking at a time when all threads are finished with their execution
+        eTime = System.currentTimeMillis(); 
 
 
         //image export
         try {
-            f = new File("C:\\Users\\Thabani\\Desktop\\Assignment1_PP\\Assignment1_PP\\ImageFilter\\export_img\\output.jpg");
+            f = new File("../export_img/"+ output);
             ImageIO.write(newPic,"jpg", f);
             //System.out.println("=====");
         } catch (Exception e) {
             //handle exception
             System.out.println(e);
         }
+    
 
+        //duration calculation
+        System.out.println("Total execution time: "+(eTime- sTime) +"ms");
+
+        }
     }
 
     

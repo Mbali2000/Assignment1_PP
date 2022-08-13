@@ -128,6 +128,7 @@ public static void main(String[]args) throws IOException{
         System.out.println(e);
     }
 
+    //total execution duration
     System.out.println("Total execution time: "+(eTime-sTime)+"ms");
 
 }

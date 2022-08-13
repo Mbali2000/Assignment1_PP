@@ -24,22 +24,23 @@ public class MeanFilterSerial{
         try (
         // set window size manipulation
         Scanner sc = new Scanner(System.in)) {
-           /*  //input file
-            System.out.println("Enter inout file name: ");
-            String input = sc.nextLine();
+            //input file
+            //System.out.println("Enter inout file name: ");
+            String input = args[0];
 
             //output file name
-            System.out.println("Enter output file name: ");
-            output = sc.nextLine();*/
+            //System.out.println("Enter output file name: ");
+            output = args[1];
 
             //window size
-            System.out.println("Enter Window Size: ");
+            //System.out.println("Enter Window Size: ");
 
-            int win = sc.nextInt();// size of window
+            String num = args[2];// size of window
+            int win = Integer.parseInt(num);
 
             //read in image
             try {
-                f = new File("C:\\Users\\Thabani\\Desktop\\Assignment1_PP\\Assignment1_PP\\ImageFilter\\import_img\\image2.jpg");
+                f = new File("../import_img/"+ input);
                 img = ImageIO.read(f);// assigning file to image variable
                 newPic = ImageIO.read(f);
             } catch (Exception e) {
@@ -102,7 +103,7 @@ public class MeanFilterSerial{
         
         //write image
         try {
-            f = new File("C:\\Users\\Thabani\\Desktop\\Assignment1_PP\\Assignment1_PP\\ImageFilter\\export_img\\output.jpg");
+            f = new File("../export_img/"+output);
             ImageIO.write(newPic,"jpg", f);
             //System.out.println("=====");
         } catch (Exception e) {
