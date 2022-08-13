@@ -15,6 +15,7 @@ static BufferedImage img;
 static File f;
 static BufferedImage newPic;
 static String output;
+static String input;
 
 //time stamp
 static long sTime;
@@ -28,23 +29,24 @@ public MedianFilterSerial(){
 public static void main(String[]args) throws IOException{
     try (Scanner sc = new Scanner(System.in)) {
         //file name
-       /*  System.out.println("Enter input image name: ");
-        String input = sc.nextLine();
+        //System.out.println("Enter input image name: ");
+        input = args[0];
         
         //output file name
-        System.out.println("Enter output image name: ");
-        output = sc.nextLine();*/
+        //System.out.println("Enter output image name: ");
+        output = args[1];
 
         //window size
-        System.out.println("Enter Window size: ");
-        int win = sc.nextInt();
+        //System.out.println("Enter Window size: ");
+        String num = args[2];
+        int win = Integer.parseInt(num);
         
 
         int arrLength = win*win;
 
         //read in image
         try {
-            f = new File("C:\\Users\\Thabani\\Desktop\\Assignment1_PP\\Assignment1_PP\\ImageFilter\\import_img\\image2.jpg");
+            f = new File("../import_img/");
             img = ImageIO.read(f);// assigning file to image variable
             newPic = ImageIO.read(f);
         } catch (Exception e) {
@@ -121,7 +123,7 @@ public static void main(String[]args) throws IOException{
     //write image
     try {
         //String output;
-        f = new File("C:\\Users\\Thabani\\Desktop\\Assignment1_PP\\Assignment1_PP\\ImageFilter\\export_img\\output.jpg");
+        f = new File("../export_img/");
         ImageIO.write(newPic,"jpg", f);
     } catch (Exception e) {
         //handle exception

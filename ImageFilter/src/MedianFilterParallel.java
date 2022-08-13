@@ -30,6 +30,7 @@ public class MedianFilterParallel extends RecursiveAction {
     static long sTime;
     static long eTime;
     static String output;
+    static String input;
 
     //storage arraylists
     ArrayList<Integer>  red = new ArrayList<Integer>();
@@ -122,8 +123,13 @@ public class MedianFilterParallel extends RecursiveAction {
 
     public static void main(String[] args) throws IOException{
         try (Scanner sc = new Scanner(System.in)) {
-            System.out.println("Enter Window size: ");
-            win = sc.nextInt();
+            //System.out.println("Enter Window size: ");
+             input = args[0];
+
+             output = args[1];
+
+            String num = args[2];
+            win = Integer.parseInt(num);
 
             surpix = (win-1)/2;
         
@@ -132,7 +138,7 @@ public class MedianFilterParallel extends RecursiveAction {
 
         //read in image
         try {
-            f = new File("C:\\Users\\Thabani\\Desktop\\Assignment1_PP\\Assignment1_PP\\ImageFilter\\import_img\\image2.jpg");
+            f = new File("../import_img/");
             img = ImageIO.read(f);// assigning file to image variable
             newPic = ImageIO.read(f);
         } catch (Exception e) {
@@ -156,7 +162,7 @@ public class MedianFilterParallel extends RecursiveAction {
 
         //write out image
         try {
-            f = new File("C:\\Users\\Thabani\\Desktop\\Assignment1_PP\\Assignment1_PP\\ImageFilter\\export_img\\output.jpg");
+            f = new File("../export_img/");
             ImageIO.write(newPic,"jpg", f);
         } catch (Exception e) {
             //handle exception
