@@ -40,7 +40,7 @@ public class MeanFilterSerial{
 
             //read in image
             try {
-                f = new File("../import_img/"+ input);
+                f = new File("import_img/"+ input);
                 img = ImageIO.read(f);// assigning file to image variable
                 newPic = ImageIO.read(f);
             } catch (Exception e) {
@@ -103,7 +103,7 @@ public class MeanFilterSerial{
         
         //write image
         try {
-            f = new File("../export_img/"+output);
+            f = new File("export_img/"+output);
             ImageIO.write(newPic,"jpg", f);
             //System.out.println("=====");
         } catch (Exception e) {

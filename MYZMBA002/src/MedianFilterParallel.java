@@ -39,7 +39,7 @@ public class MedianFilterParallel extends RecursiveAction {
     ArrayList<Integer> aph = new ArrayList<Integer>();
 
     //sequential cutoff
-    int seqCut = 100;
+    int seqCut = 350;
 
 
 
@@ -138,7 +138,7 @@ public class MedianFilterParallel extends RecursiveAction {
 
         //read in image
         try {
-            f = new File("../import_img/");
+            f = new File("import_img/"+input);
             img = ImageIO.read(f);// assigning file to image variable
             newPic = ImageIO.read(f);
         } catch (Exception e) {
@@ -146,12 +146,13 @@ public class MedianFilterParallel extends RecursiveAction {
             System.out.println(e);
         } 
 
-        // time stamp at start of algorithm execution run
-        sTime = System.currentTimeMillis(); 
-
+        
 
         ForkJoinPool fj = new ForkJoinPool();
         MedianFilterParallel mp = new MedianFilterParallel(0, img.getHeight(), 0, img.getWidth());
+        // time stamp at start of algorithm execution run
+        sTime = System.currentTimeMillis(); 
+
         fj.invoke(mp);
 
         //time stamp at end of algorithm execution taking at a time when all threads are finished with their execution
@@ -162,7 +163,7 @@ public class MedianFilterParallel extends RecursiveAction {
 
         //write out image
         try {
-            f = new File("../export_img/");
+            f = new File("export_img/"+output);
             ImageIO.write(newPic,"jpg", f);
         } catch (Exception e) {
             //handle exception

@@ -1,0 +1,99 @@
+commit 2d1dd73bb35151a06c7883e5ef276a7bb468f3d2 (HEAD -> main, origin/main)
+Author: Mbali2000 <107546127+Mbali2000@users.noreply.github.com>
+Date:   Sat Aug 13 13:57:56 2022 +0200
+
+    as
+
+commit c359626776a00f59c2cb3c778700f7882ebbec07
+Author: Mbali2000 <107546127+Mbali2000@users.noreply.github.com>
+Date:   Sat Aug 13 13:10:57 2022 +0200
+
+    running mean filter
+
+commit 1980c22fecb3c594e2d42cd08aa30fe15695f1bb
+Author: Mbali2000 <107546127+Mbali2000@users.noreply.github.com>
+Date:   Fri Aug 12 11:25:33 2022 +0200
+
+    update
+
+commit 72b8e48169485bde25e81eaab6330e95223d09e8
+Author: Mbali2000 <107546127+Mbali2000@users.noreply.github.com>
+Date:   Fri Aug 12 10:10:05 2022 +0200
+
+    deleted for space
+
+commit a4c2f4b5bd2f8ad63b7c6f441945ebec50d9b2db
+Author: Mbali2000 <107546127+Mbali2000@users.noreply.github.com>
+Date:   Thu Aug 11 23:40:01 2022 +0200
+
+    updates serial complete
+
+commit e6635b20f600e8f4cd04f084525dd0f99a4b19b8
+Author: Mbali2000 <107546127+Mbali2000@users.noreply.github.com>
+Date:   Thu Aug 11 00:09:23 2022 +0200
+
+    updates
+
+commit ede7db82b402c3a5d009d7daf65142e77a11c298
+Author: Mbali2000 <107546127+Mbali2000@users.noreply.github.com>
+Date:   Tue Aug 9 23:12:35 2022 +0200
+
+    new parallel class created
+
+commit 1900c249153d1ad6986ff31772f5088097967a17
+Author: Mbali2000 <107546127+Mbali2000@users.noreply.github.com>
+Date:   Mon Aug 8 16:19:00 2022 +0200
+
+    Error output
+
+commit a498f551b4c547b21c8ebbc4b105f221425ecbf1
+Author: Mbali2000 <107546127+Mbali2000@users.noreply.github.com>
+Date:   Mon Aug 8 15:34:48 2022 +0200
+
+    Update
+
+commit ccddc009dfbc9355b8fba5424e35187d461a4dab
+Author: Mbali2000 <107546127+Mbali2000@users.noreply.github.com>
+Date:   Sun Aug 7 23:27:57 2022 +0200
+
+    median class and changes
+    
+    changes to pixel manipulation as previous method was long winded and required many other classes
+
+commit f95b0b659a6e5c17946cc54a0c66552aa52cffa1
+Author: Mbali2000 <107546127+Mbali2000@users.noreply.github.com>
+Date:   Sat Aug 6 22:42:22 2022 +0200
+
+    updates
+
+commit ed24568fc27cdc8f7286d884ed65e01ad9fb36da
+Author: Mbali2000 <107546127+Mbali2000@users.noreply.github.com>
+Date:   Sat Aug 6 21:05:22 2022 +0200
+
+    Mean Algorithm calculation
+    
+    Trying to figure out proper algorithm for calculation
+
+commit ca497893b1247022c801f21fdf1bb5682846b82b
+Author: Mbali2000 <107546127+Mbali2000@users.noreply.github.com>
+Date:   Fri Aug 5 00:18:24 2022 +0200
+
+    Update MeanFilterSerial.java
+
+commit f173987018bd8e3d9c53ef3ef18d3ea204e09696
+Author: Mbali2000 <107546127+Mbali2000@users.noreply.github.com>
+Date:   Thu Aug 4 23:32:36 2022 +0200
+
+    get image file
+
+commit c3c76154e757e8aee1b2cfa92b3f6d7f2444d042
+Author: Mbali2000 <107546127+Mbali2000@users.noreply.github.com>
+Date:   Thu Aug 4 11:40:06 2022 +0200
+
+    Created project
+
+commit ebad169672957cfbbbc701fd7adddbff3a624b6b
+Author: Mbali2000 <107546127+Mbali2000@users.noreply.github.com>
+Date:   Thu Aug 4 11:30:02 2022 +0200
+
+    Initial commit

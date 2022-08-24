@@ -46,7 +46,7 @@ public static void main(String[]args) throws IOException{
 
         //read in image
         try {
-            f = new File("../import_img/");
+            f = new File("import_img/"+input);
             img = ImageIO.read(f);// assigning file to image variable
             newPic = ImageIO.read(f);
         } catch (Exception e) {
@@ -123,7 +123,7 @@ public static void main(String[]args) throws IOException{
     //write image
     try {
         //String output;
-        f = new File("../export_img/");
+        f = new File("export_img/"+output);
         ImageIO.write(newPic,"jpg", f);
     } catch (Exception e) {
         //handle exception

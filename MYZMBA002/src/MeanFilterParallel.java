@@ -32,7 +32,7 @@ public class MeanFilterParallel extends RecursiveAction{
     static String output;
 
     //sequential cutoff
-    static int seqCut = 1000;
+    static int seqCut = 100;
 
     public MeanFilterParallel(int sH, int eH, int sW, int eW){
 
@@ -133,7 +133,7 @@ public class MeanFilterParallel extends RecursiveAction{
 
         //image read in
         try {
-            f = new File("../import_img/"+ input);
+            f = new File("import_img/"+ input);
             img = ImageIO.read(f);// assigning file to image variable
             newPic = ImageIO.read(f);
         } catch (Exception e) {
@@ -142,11 +142,12 @@ public class MeanFilterParallel extends RecursiveAction{
         } 
     
 
-        // time stamp at start of algorithm execution run
-        sTime = System.currentTimeMillis(); 
+        
 
         ForkJoinPool fj = new ForkJoinPool();
         MeanFilterParallel mp = new MeanFilterParallel(0, img.getHeight(), 0, img.getWidth());
+        // time stamp at start of algorithm execution run
+        sTime = System.currentTimeMillis(); 
         fj.invoke(mp);
 
         //time stamp at end of algorithm execution taking at a time when all threads are finished with their execution
@@ -155,7 +156,7 @@ public class MeanFilterParallel extends RecursiveAction{
 
         //image export
         try {
-            f = new File("../export_img/"+ output);
+            f = new File("export_img/"+ output);
             ImageIO.write(newPic,"jpg", f);
             //System.out.println("=====");
         } catch (Exception e) {
